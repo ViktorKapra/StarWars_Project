@@ -2,7 +2,6 @@
 #ifndef _DynamicArray
 #define _DynamicArray
 #include <iostream>
-#include "Constants.h"
 
 const int Initial_Capacity = 4;
 
@@ -27,6 +26,7 @@ public:
 	bool RemoveAt(unsigned n);
 	bool Remove(T const&);
 	T getTheMost(T initialValue, bool (*f)(T&, T&));
+	void Clear();
 };
 
 template<typename T>
@@ -52,7 +52,7 @@ DynamicArray<T>::DynamicArray(T* _elements, size_t _size)
 	}
 	else
 	{
-		throw std::invalid_argument(Constants::NULL_POINTER_MESSAGE);
+		throw std::invalid_argument("Null pointer !!!");
 	}
 }
 
@@ -111,7 +111,7 @@ DynamicArray<T>& DynamicArray<T>::operator=(DynamicArray const& other)
 	if (this != &other)
 	{
 		delete[] elements;
-		elements = T[other.capacity];
+		elements = new T[other.capacity];
 		copyArray(other);
 	}
 	return *this;
@@ -165,6 +165,16 @@ bool DynamicArray<T>::Remove(T const& element)
 	}
 	return result;
 }
+
+template<typename T>
+void DynamicArray<T>::Clear()
+{
+	delete[] this->elements;
+	elements = new T[Initial_Capacity];
+	size = 0;
+	capacity = Initial_Capacity;
+}
+
 /*
 template<typename T>
 DynamicArray<T>::getTheMost(T initialValue, bool (*f)(T&, T&))

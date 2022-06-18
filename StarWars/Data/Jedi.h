@@ -13,8 +13,13 @@ private:
 	TextContainer lightsaber;
 	double power;
 public:
+	const TextContainer& getName()const { return name; }
+	Rang getRang()const { return rang; }
+	const TextContainer& getLightsaber()const { return lightsaber; }
+	double getPower() const { return power; }
+	unsigned getAge()const { return age; }
 	Jedi();
 	Jedi(TextContainer _name, Rang _rang, unsigned _age, double _power, TextContainer _lightsaber);
-//	friend std::ostream& operator<<(std::ostream& os, Jedi const& jedi);
-//	friend std::istream& operator>>(std::istream& is, Jedi const& jedi);
+	friend std::ostream& operator<<(std::ostream& os, Jedi const& jedi);
+	friend std::istream& operator>>(std::istream& is, Jedi& jedi);
 };

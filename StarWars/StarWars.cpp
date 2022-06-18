@@ -2,13 +2,15 @@
 //
 #include "UI/UI.h"
 #include "StarWars.h"
-
+#include "Test/Tests.h"
 using namespace std;
 
 int main()
 {
 
-	//UI ui;
-	//ui.startSystem();
+//	UI ui;
+//	ui.startSystem();
+	Test test;
+	test.planetReadingWitingTest();
 	return 0;
 }

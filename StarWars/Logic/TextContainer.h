@@ -12,11 +12,13 @@ public:
 	TextContainer& operator=(const TextContainer& textCon);
 	bool operator==(const TextContainer& textCon2);
 	void setText(const char* _text);
-	friend std::istream& operator>>(std::istream& is,TextContainer container);
+	friend std::istream& operator>>(std::istream& is,TextContainer& container);
+	friend std::ostream& operator<<(std::ostream& os, TextContainer const& container);
 	TextContainer(const TextContainer& textCon);
 	~TextContainer();
 	char const* getText()const { return text; }
 	int getLenghtOfText()const;
 	TextContainer operator+(const TextContainer& textCon);
 	void convertIntToTextContainer(int integer);
+	
 };

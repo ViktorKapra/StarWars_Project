@@ -85,12 +85,17 @@ void TextContainer::convertIntToTextContainer(int integer)
 	setText(result);
 }
 
-std::istream& operator>>(std::istream& is, TextContainer container)
+std::istream& operator>>(std::istream& is, TextContainer& container)
 {
 	const int maxMessageLength = 1024;
 	char t[maxMessageLength];
-	is.getline(t,maxMessageLength);
+	is >> t;
 	container.setText(t);
 	return is;
+}
+std::ostream& operator<<(std::ostream& os, TextContainer const& container) 
+{
+	os << container.getText();
+	return os;
 }
 
