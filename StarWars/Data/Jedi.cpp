@@ -9,6 +9,7 @@ Jedi::Jedi()
 	age = 0;
 	name = TextContainer(DEFAULTNAME);
 	power = 0.0;
+	rang = YOUNGLING;
 	lightsaber = TextContainer(DEFAULT_LIGHTSABER);
 }
 Jedi::Jedi(TextContainer _name, Rang _rang, unsigned _age, double _power, TextContainer _lightsaber)
@@ -21,8 +22,7 @@ Jedi::Jedi(TextContainer _name, Rang _rang, unsigned _age, double _power, TextCo
 }
 
 std::ostream& operator<<(std::ostream& os, Jedi const& jedi) {
-	// TO DO ...
-	os << jedi.getName()<<" " << jedi.getAge() << " " << jedi.getPower()<< " " << jedi.getRang() << " " << jedi.getLightsaber();
+	os << jedi.getName() << " " << jedi.getRang() << " " << jedi.getAge() << " " << jedi.getLightsaber() << " " << jedi.getPower();
 	return os;
 }
 std::istream& operator>>(std::istream& is, Jedi& jedi) {
@@ -31,9 +31,24 @@ std::istream& operator>>(std::istream& is, Jedi& jedi) {
 	int  rang;
 	unsigned age;
 	double power;
-	is >> name >> age >> power  >> rang >> lightsaber;
-	jedi = Jedi(name,(Rang)rang,age,power,lightsaber);
+	is >> name >> rang >> age >> lightsaber >> power;
+	jedi = Jedi(name, (Rang)rang, age, power, lightsaber);
 
 	return is;
 }
 
+void Jedi::changePower(double mult)
+{
+	this->power*= mult;
+}
+void Jedi::changeRang(int(*incrementor)(Rang))
+{
+	int newRang = incrementor(this->getRang());
+	if (newRang < Rang::GRAND_MASTER)
+	{
+		if (newRang > Rang::YOUNGLING)
+		{
+			this->rang = (Rang)newRang;
+		}
+	}
+}

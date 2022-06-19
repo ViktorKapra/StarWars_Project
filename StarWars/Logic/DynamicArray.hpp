@@ -22,10 +22,13 @@ public:
 	~DynamicArray();
 	DynamicArray& operator=(DynamicArray const& other);
 	T& operator[](size_t n);
+	int getIndexOfElement(T const& elem);
 	void Add(T const& element);
-	bool RemoveAt(unsigned n);
-	bool Remove(T const&);
-	T getTheMost(T initialValue, bool (*f)(T&, T&));
+	bool removeAt(unsigned n);
+	bool remove(T const&);
+	T getTheMost(bool (*f)(T const&, T const&))const;
+	void sort(bool (*f)(T const&, T const&));
+	//getTheMost(T initialValue, bool(*f)(T&, T&));
 	void Clear();
 };
 
@@ -119,7 +122,7 @@ DynamicArray<T>& DynamicArray<T>::operator=(DynamicArray const& other)
 template <typename T>
 T& DynamicArray<T>::operator[](size_t n)
 {
-	if (n < size) { return elements[n]; }
+	if (n < size || n == 0) { return elements[n]; }
 	else
 	{
 		throw std::invalid_argument("Argument was out of range");
@@ -127,7 +130,7 @@ T& DynamicArray<T>::operator[](size_t n)
 }
 
 template<typename T>
-bool DynamicArray<T>::RemoveAt(unsigned n)
+bool DynamicArray<T>::removeAt(unsigned n)
 {
 	bool result = false;
 	if (n < size)
@@ -145,7 +148,7 @@ bool DynamicArray<T>::RemoveAt(unsigned n)
 	}
 }
 template<typename T>
-bool DynamicArray<T>::Remove(T const& element)
+bool DynamicArray<T>::remove(T const& element)
 {
 	bool result = false;
 	unsigned elementIndex = 0;
@@ -161,7 +164,7 @@ bool DynamicArray<T>::Remove(T const& element)
 	}
 	if (result)
 	{
-		RemoveAt(elementIndex);
+		removeAt(elementIndex);
 	}
 	return result;
 }
@@ -175,19 +178,57 @@ void DynamicArray<T>::Clear()
 	capacity = Initial_Capacity;
 }
 
-/*
 template<typename T>
-DynamicArray<T>::getTheMost(T initialValue, bool (*f)(T&, T&))
+int DynamicArray<T>::getIndexOfElement(T const& elem)
 {
-	for (int i = 0; i < size; i++)
+	int defaultIndex = -1;
+	int arrSize = this->getSize();
+	for (int i = 0; i < arrSize; i++)
 	{
-		if (f(iniatialValue, elements[i]))
-		{
-			initiatialValue = elements[i];
-		}
+		if (elements[i] == elem)
+			return i;
 	}
-	return initialValue;
+	return defaultIndex;
 }
-*/
+
+template<typename T>
+T DynamicArray<T>::getTheMost(bool (*f)(T const&, T const&))const
+{
+	if (this->getSize() > 0)
+	{
+		T initialValue = elements[0];
+		for (int i = 1; i < size; i++)
+		{
+			if (f(initialValue, elements[i]))
+			{
+				initialValue = elements[i];
+			}
+		}
+
+		return initialValue;
+	}
+	else throw std::logic_error("There is no elements in this array!");
+}
+
+template<typename T>
+void DynamicArray<T>::sort(bool (*f)(T const&, T const&))
+{
+	for (int i = 0; i < this->size; i++)
+	{
+		T el = elements[i];
+		int elIndex = i;
+		for (int y = i + 1; y < this->size; y++)
+		{
+			if (f(el, elements[y]))
+			{
+				el = elements[y];
+				elIndex = y;
+			}
+		}
+		T swaper = elements[i];
+		elements[i] = elements[elIndex];
+		elements[elIndex] = swaper;
+	}
+}
 
 #endif // !_DynamicArray

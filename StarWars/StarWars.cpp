@@ -8,9 +8,9 @@ using namespace std;
 int main()
 {
 
-//	UI ui;
-//	ui.startSystem();
-	Test test;
-	test.planetReadingWitingTest();
+	UI ui;
+	ui.startSystem();
+//	Test test;
+//	test.planetReadingWitingTest();
 	return 0;
 }

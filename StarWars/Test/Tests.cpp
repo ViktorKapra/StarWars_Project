@@ -47,3 +47,8 @@ void Test::planetReadingWitingTest()
 
 	std::cout << pl;
 }
+
+void Test::changeRangOfJediTest()
+{
+	// create test
+}

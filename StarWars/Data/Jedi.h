@@ -5,17 +5,20 @@
 class Jedi
 {
 private:
-	static const char* DEFAULTNAME;
-	static const char* DEFAULT_LIGHTSABER;
+
 	TextContainer name;
 	Rang rang;
 	unsigned age;
 	TextContainer lightsaber;
 	double power;
 public:
+	static const char* DEFAULTNAME;
+	static const char* DEFAULT_LIGHTSABER;
 	const TextContainer& getName()const { return name; }
 	Rang getRang()const { return rang; }
+	void changeRang(int (*incrementor)(Rang));
 	const TextContainer& getLightsaber()const { return lightsaber; }
+	void changePower(double mult);
 	double getPower() const { return power; }
 	unsigned getAge()const { return age; }
 	Jedi();

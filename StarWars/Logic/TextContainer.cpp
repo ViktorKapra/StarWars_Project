@@ -19,7 +19,7 @@ TextContainer& TextContainer:: operator=(const TextContainer& textCon)
 	}
 	return *this;
 }
-bool TextContainer::operator==(const TextContainer& textCon2)
+bool TextContainer::operator==(const TextContainer& textCon2)const
 {
 	if (strcmp(this->getText(), textCon2.getText()) == 0)
 		return true;

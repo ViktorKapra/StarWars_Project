@@ -8,4 +8,6 @@ public:
 
 	void planetReadingWitingTest();
 
+	void changeRangOfJediTest();
+
 };

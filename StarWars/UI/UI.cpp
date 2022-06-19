@@ -10,111 +10,133 @@ void UI::startSystem()
 {
 	std::cout << "Welcome to Jedi Sysytem" << std::endl;
 	bool exitCommand = false;
-
+	LogicManager lm;
 	while (!exitCommand)
 	{
-
 		std::cout << "Enter command: ";
-		LogicManager lm;
 		TextContainer command;
 		std::cin >> command;
 
 		if (strcmp(command.getText(), "Open") == 0)
 		{
 			TextContainer fileName;
-			char data[MAX_COMMAND_LENGHT];
 			std::cin >> fileName;
-			fileName.setText(data);
 			lm.openFile(fileName);
 			fileWasOpened = true;
-		}
-		else if (strcmp(command.getText(), "Save") == 0)
-		{
-			if (fileWasOpened)
-			{
-				lm.save();
-				
-			}
-			else
-			{
-				std::cout << "No file was opened to save!" << std::endl;
-			}
-		}
-		else if (strcmp(command.getText(), "SaveAs") == 0)
-		{
-			if (fileWasOpened)
-			{
-				TextContainer fileName;
-				char data[MAX_COMMAND_LENGHT];
-				std::cin >> fileName;
-				fileName.setText(data);
-				lm.saveAs(fileName);
-			}
-			else
-			{
-				std::cout << "There is no open file!";
-			}
-		}
-		else if (strcmp(command.getText(), "Help") == 0)
-		{
-			this->Help();
-		}
-		else if (strcmp(command.getText(), "Close") == 0)
-		{
-			if (fileWasOpened)
-			{
-				lm.Close();
-				fileWasOpened = false;
-			}
-		}
-
-		else if (strcmp(command.getText(), "add_planet") == 0)
-		{
-
-		}
-		else if (strcmp(command.getText(), "create_jedi") == 0)
-		{
-
-		}
-		else if (strcmp(command.getText(), "removeJedi") == 0)
-		{
-
-		}
-		else if (strcmp(command.getText(), "promote_jedi") == 0)
-		{
-
-		}
-		else if (strcmp(command.getText(), "demote_jedi") == 0)
-		{
-
-		}
-		else if (strcmp(command.getText(), "get_strongest_jedi") == 0)
-		{
-
-		}
-		else if (strcmp(command.getText(), "get_youngest_jedi") == 0)
-		{
-
-		}
-		else if (strcmp(command.getText(), "get_most_used_saber_color") == 0)
-		{
-
-		}
-		else if (strcmp(command.getText(), "print") == 0)
-		{
-
 		}
 		else if (strcmp(command.getText(), "Exit") == 0)
 		{
 			exitCommand = true;
 		}
+		else if (strcmp(command.getText(), "Help") == 0)
+		{
+			this->Help();
+		}
+		else if (fileWasOpened)
+		{
+			if (strcmp(command.getText(), "Save") == 0)
+			{
+					lm.save();
+			}
+			else if (strcmp(command.getText(), "SaveAs") == 0)
+			{
+					TextContainer fileName;
+					char data[MAX_COMMAND_LENGHT];
+					std::cin >> fileName;
+					fileName.setText(data);
+					lm.saveAs(fileName);
+			}
+
+			else if (strcmp(command.getText(), "Close") == 0)
+			{
+				if (fileWasOpened)
+				{
+					//lm.close();
+					fileWasOpened = false;
+				}
+			}
+
+			else if (strcmp(command.getText(), "add_planet") == 0)
+			{
+				TextContainer planetName;
+				std::cin >> planetName;
+				Planet pl(planetName);
+				lm.addPlanet(planetName);
+			}
+			else if (strcmp(command.getText(), "create_jedi") == 0)
+			{
+				TextContainer planetName;
+				std::cin >> planetName;
+				Jedi jedi;
+				std::cin >> jedi;
+				lm.addJedi(planetName, jedi);
+
+			}
+			else if (strcmp(command.getText(), "remove_jedi") == 0)
+			{
+				TextContainer jediName;
+				std::cin >> jediName;
+				TextContainer planetName;
+				std::cin >> planetName;
+				lm.removeJedi(planetName, jediName);
+			}
+			else if (strcmp(command.getText(), "promote_jedi") == 0)
+			{
+				TextContainer jediName;
+				std::cin >> jediName;
+				double mult = 0.0;
+				std::cin >> mult;
+				lm.changeJediRank(jediName, 1.0 + mult, [](Rang r1)->int {return r1 + 1; });
+			}
+			else if (strcmp(command.getText(), "demote_jedi") == 0)
+			{
+				TextContainer jediName;
+				std::cin >> jediName;
+				double mult = 0.0;
+				std::cin >> mult;
+				lm.changeJediRank(jediName, 1.0 - mult, [](Rang r1)->int {return r1 - 1; });
+			}
+			else if (strcmp(command.getText(), "get_strongest_jedi") == 0)
+			{
+				TextContainer planetName;
+				std::cin >> planetName;
+
+				lm.getMostJedi(planetName, [](Jedi const& j1, Jedi const& j2)-> bool { return j1.getPower() <= j2.getPower(); });
+			}
+			else if (strcmp(command.getText(), "get_youngest_jedi") == 0)
+			{
+				TextContainer planetName;
+				std::cin >> planetName;
+				int rang;
+				std::cin >> rang;
+				lm.getYoungestJedi(planetName, (Rang)rang);
+			}
+			else if (strcmp(command.getText(), "get_most_used_saber_color") == 0)
+			{
+				TextContainer planetName;
+				std::cin >> planetName;
+				int rang;
+				std::cin >> rang;
+				lm.getMostUsedSaberColor(planetName, (Rang)rang);
+			}
+			else if (strcmp(command.getText(), "print") == 0)
+			{
+				TextContainer name;
+				std::cin >> name;
+				lm.print(name);
+			}
+
+			else
+			{
+				std::cerr << "Command you wrote is not recognized or "
+					<< "file for modification was opened" << std::endl;
+			}
+		}
 		else
 		{
-			//To do <planet_name> <planet_name>
-			std::cerr << "Command you wrote is not recognized or "
-				<< "file for modification was opened" << std::endl;
+		
+			std::cout << "No file was opened!" << std::endl;
 		}
-
 
 	}
 }
