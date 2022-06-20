@@ -161,9 +161,9 @@ void LogicManager::print(TextContainer const& name)
 			Jedi jed = *(findJedi(name));
 			std::cout << jed << std::endl;
 		}
-		catch (std::bad_cast)
+		catch (std::invalid_argument e)
 		{
-			std::cout << "No jedi or planet was found!" << std::endl;
+			std::cout << e.what() << std::endl;
 		}
 	}
 }

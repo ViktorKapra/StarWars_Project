@@ -37,9 +37,9 @@ std::istream& operator>>(std::istream& is, Jedi& jedi) {
 	return is;
 }
 
-void Jedi::changePower(double mult)
+void Jedi::changePower(double addition)
 {
-	this->power*= mult;
+	this->power*= addition;
 }
 void Jedi::changeRang(int(*incrementor)(Rang))
 {

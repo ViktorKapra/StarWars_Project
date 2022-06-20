@@ -1,6 +1,5 @@
 #include "UI.h"
 #include "..\Logic\TextContainer.h"
-#include "CommandEnums.h"
 #include "..\Logic\LogicManager.h"
 #include <iomanip>
 
@@ -41,9 +40,7 @@ void UI::startSystem()
 			else if (strcmp(command.getText(), "SaveAs") == 0)
 			{
 					TextContainer fileName;
-					char data[MAX_COMMAND_LENGHT];
 					std::cin >> fileName;
-					fileName.setText(data);
 					lm.saveAs(fileName);
 			}
 
@@ -70,6 +67,7 @@ void UI::startSystem()
 				Jedi jedi;
 				std::cin >> jedi;
 				lm.addJedi(planetName, jedi);
+				std::cout << "Jedi " << jedi << " succesfully added to planet " << planetName<<std::endl;
 
 			}
 			else if (strcmp(command.getText(), "remove_jedi") == 0)
@@ -79,6 +77,7 @@ void UI::startSystem()
 				TextContainer planetName;
 				std::cin >> planetName;
 				lm.removeJedi(planetName, jediName);
+				std::cout << "Jedi succesfully removed!" << std::endl;
 			}
 			else if (strcmp(command.getText(), "promote_jedi") == 0)
 			{
@@ -87,6 +86,7 @@ void UI::startSystem()
 				double mult = 0.0;
 				std::cin >> mult;
 				lm.changeJediRank(jediName, 1.0 + mult, [](Rang r1)->int {return r1 + 1; });
+				std::cout << "Jedi succesfully promoted!" << std::endl;
 			}
 			else if (strcmp(command.getText(), "demote_jedi") == 0)
 			{
@@ -95,6 +95,7 @@ void UI::startSystem()
 				double mult = 0.0;
 				std::cin >> mult;
 				lm.changeJediRank(jediName, 1.0 - mult, [](Rang r1)->int {return r1 - 1; });
+				std::cout << "Jedi succesfully demoted!" << std::endl;
 			}
 			else if (strcmp(command.getText(), "get_strongest_jedi") == 0)
 			{

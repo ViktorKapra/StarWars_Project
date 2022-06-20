@@ -22,13 +22,42 @@ public:
 	~DynamicArray();
 	DynamicArray& operator=(DynamicArray const& other);
 	T& operator[](size_t n);
+	/// <summary>
+	/// Function returns index of the givven element, if the element is not found than
+	///  it returns default index -1.
+	/// </summary>
+	/// <param name="elem"></param>
+	/// <returns></returns>
 	int getIndexOfElement(T const& elem);
 	void Add(T const& element);
+	/// <summary>
+	/// Function removes element on givven index.
+	/// </summary>
+	/// <param name="n"></param>
+	/// <returns></returns>
 	bool removeAt(unsigned n);
+	/// <summary>
+	/// Function remove the first match of the given element
+	/// </summary>
+	/// <param name=""></param>
+	/// <returns></returns>
 	bool remove(T const&);
+	/// <summary>
+	/// Function returns element which is the most higher by the condition f. 
+	/// If an array is empty it throws an exception.
+	/// </summary>
+	/// <param name="f"></param>
+	/// <returns></returns>
 	T getTheMost(bool (*f)(T const&, T const&))const;
+	/// <summary>
+	/// Function sort the elelemts by the given condition. The complexity of that method is O(n^2)
+	/// </summary>
+	/// <param name="f"></param>
 	void sort(bool (*f)(T const&, T const&));
-	//getTheMost(T initialValue, bool(*f)(T&, T&));
+	/// <summary>
+	/// Function clears all objects of the container
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	void Clear();
 };
 
